@@ -23,11 +23,17 @@ var ball = {
 
 function setup(){
   var canvas =  createCanvas(700,600);
+  canvas.parent("canvas");
+  video = createcapture(VIDEO);
+  video.size(700, 600);
+  video.hide();
+  poseNet = ml5.poseNet(video, modelLoaded);
+  poseNet.on('pose', gotPoses);
 }
 
 
 function draw(){
-
+ image(video, 0, 0, 380, 380);
  background(0); 
 
  fill("black");
@@ -67,7 +73,9 @@ function draw(){
     move();
 }
 
-
+function modelLoaded() {
+  console.log("Model Loaded");
+}
 
 //function reset when ball does notcame in the contact of padde
 function reset(){
