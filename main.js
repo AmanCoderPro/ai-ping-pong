@@ -21,10 +21,14 @@ var ball = {
     dy:3
 }
 
+rightwristx = "";
+rightwristy = "";
+rightwristscore = "";
+
 function setup(){
   var canvas =  createCanvas(700,600);
   canvas.parent("canvas");
-  video = createcapture(VIDEO);
+  video = createCapture(VIDEO);
   video.size(700, 600);
   video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
@@ -33,6 +37,12 @@ function setup(){
 
 
 function draw(){
+  if(rightwristscore > 0.2) {
+    fill("#DC0050");
+    stroke("#DC0050");
+    circle(rightwristx, rightwristy, 25);
+  }
+
  image(video, 0, 0, 380, 380);
  background(0); 
 
@@ -75,6 +85,15 @@ function draw(){
 
 function modelLoaded() {
   console.log("Model Loaded");
+}
+
+function gotPoses(results) {
+  if(results.length > 0) {
+    console.log(results);
+    rightwristx = results[0].pose.rightWrist.x;
+    rightwristy = results[0].pose.rightWrist.y;
+    rightwristscore = results[0].pose.keypoints[10].score;
+  }
 }
 
 //function reset when ball does notcame in the contact of padde
