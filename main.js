@@ -24,6 +24,7 @@ var ball = {
 rightwristx = "";
 rightwristy = "";
 rightwristscore = "";
+game_status = "";
 
 function setup(){
   var canvas =  createCanvas(700,600);
@@ -64,6 +65,9 @@ function draw(){
    paddle1Y = mouseY; 
    rect(paddle1X,paddle1Y,paddle1,paddle1Height,100);
    
+   if(game_status == "start") {
+    
+   }
    
     //pc computer paddle
     fill("#FFA500");
@@ -81,6 +85,11 @@ function draw(){
    
    //function move call which in very important
     move();
+}
+
+function startGame() {
+  game_status = "start";
+  document.getElementById("status").innerHTML = "Game is Loaded";
 }
 
 function modelLoaded() {
